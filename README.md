@@ -1,26 +1,22 @@
-### Infra moudles
+### Infra modules
 
-
+```
 infra-modules/
 └── alicloud/
     ├── network/
     │   ├── vpc
     │   ├── vswitch
-    │   ├── nat
-    │
+    │   └── nat               (TBD)
     ├── compute/
     │   ├── ecs
-    │   ├── autoscaling
-    │
-    ├── lb/
-    │   ├── slb
-    │
+    │   └── autoscaling        (TBD)
     ├── security/
-    │   ├── ram-user
-    │   ├── ram-role
     │   ├── security-group
-    │
+    │   ├── ram-user           (TBD)
+    │   └── ram-role           (TBD)
     ├── storage/
-    │   ├── oss
-    │
-    └── dns/   （暂时可空）
+    │   └── oss                (TBD)
+    ├── lb/
+    │   └── slb                (TBD)
+    └── dns/                   (TBD)
+```
