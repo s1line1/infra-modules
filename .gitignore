@@ -1,0 +1,4 @@
+*.tfvars
+.claude/
+.terraform*
+*.lock.hcl

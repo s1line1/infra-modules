@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    alicloud = {
+      source = "aliyun/alicloud"
+    }
+  }
+}
+
 resource "alicloud_instance" "this" {
   count           = var.ecs_count
   instance_name   = "${var.project_name}-ecs-${count.index}"

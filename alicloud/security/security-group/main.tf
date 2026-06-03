@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    alicloud = {
+      source = "aliyun/alicloud"
+    }
+  }
+}
+
 # --- 创建安全组 ---
 resource "alicloud_security_group" "security_group" {
   security_group_name = var.security_group_name
