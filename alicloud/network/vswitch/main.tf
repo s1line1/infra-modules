@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    alicloud = {
+      source = "aliyun/alicloud"
+    }
+  }
+}
+
 resource "alicloud_vswitch" "vswitch" {
   vpc_id     = var.vpc_id
   cidr_block = var.vswitch_cidr
