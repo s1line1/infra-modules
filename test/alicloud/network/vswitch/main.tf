@@ -25,6 +25,6 @@ module "vswitch" {
 
     vpc_id        = module.vpc.vpc_id
     vpc_name      = module.vpc.vpc_name
-    vswitch_cidr  = "172.16.0.0/24"
+    vswitch_cidr  = "10.1.1.0/24"
     vswitch_zone  = "cn-shanghai-b"
 }
