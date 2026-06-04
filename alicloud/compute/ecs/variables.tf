@@ -63,11 +63,6 @@ variable "internet_max_bandwidth_out" {
     default     = 1
 }
 
-# VPC
-variable "vpc_id" {
-  description = "Existing VPC ID"
-}
-
 variable "vswitch_id" {
   description = "Existing vSwitch ID"
 }

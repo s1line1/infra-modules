@@ -51,7 +51,6 @@ module "security_group" {
 
 module "this" {
     source  = "../../../../alicloud/compute/ecs"
-    vpc_id = module.vpc.vpc_id
     user_scripts = <<-EOF
                     #!/bin/bash
                     apt-get update -y
