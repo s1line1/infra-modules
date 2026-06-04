@@ -19,5 +19,21 @@ infra-modules/
 │   ├── lb/
 │   │   └── slb                (TBD)
 │   └── dns/                   (TBD)
-└── aws/                       (TBD)
+├── aws/
+│   └── network/
+│       ├── vpc
+│       └── subnet
+└── test/
+    ├── alicloud/
+    │   ├── compute/
+    │   │   └── ecs
+    │   ├── network/
+    │   │   ├── vpc
+    │   │   └── vswitch
+    │   └── security/
+    │       └── security-group
+    └── aws/
+        └── network/
+            ├── vpc
+            └── subnet
 ```
