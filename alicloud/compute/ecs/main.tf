@@ -22,6 +22,6 @@ resource "alicloud_instance" "this" {
   internet_charge_type       = var.internet_charge_type
   internet_max_bandwidth_out = var.internet_max_bandwidth_out
 
-  user_data = var.user_scripts
+  user_data = var.user_data
 
 }

@@ -71,6 +71,6 @@ variable "security_group_id" {
   description = "Existing security group ID"
 }
 
-variable "user_scripts" {
+variable "user_data" {
   description = "User data scripts for ECS instances"
 }

@@ -9,8 +9,6 @@ terraform {
 
 provider "alicloud" {
     region     = var.region
-    access_key = var.access_key
-    secret_key = var.secret_key
 }
 
 module "vpc" {
@@ -34,13 +32,15 @@ module "security_group" {
     security_group_name = "test-security-group"
     vpc_id              = module.vpc.vpc_id
 
-    ingress_rules = {
+    security_group_rules = {
         ssh = {
+            type       = "ingress"
             port_range  = "22/22"
             ip_protocol = "tcp"
             cidr_blocks = ["0.0.0.0/0"]
         }
         springboot-demo = {
+            type       = "ingress"
             port_range  = "8083/8083"
             ip_protocol = "tcp"
             cidr_blocks = ["0.0.0.0/0"]
@@ -51,12 +51,7 @@ module "security_group" {
 
 module "this" {
     source  = "../../../../alicloud/compute/ecs"
-    user_scripts = <<-EOF
-                    #!/bin/bash
-                    apt-get update -y
-                    apt-get install -y docker.io docker-compose-v2
-                    systemctl enable docker --now
-                EOF
+    user_data = file("${path.module}/user_data.yaml")
     ecs_count = 2
     project_name = "test-ecs"
     vswitch_id = module.vswitch.vswitch_id
