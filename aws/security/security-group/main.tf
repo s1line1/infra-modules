@@ -16,15 +16,12 @@ resource "aws_security_group" "security_group" {
     tags = {
         Name = var.security_group_name
     }
-
-    ingress = []
-    egress  = []
 }
 
 # --- 将 ingress_rules 扁平化（每个 CIDR 一条规则） ---
 locals {
   ingress_rules_flat = flatten([
-    for rule_name, rule in var.ingress_rules : [
+    for rule_name, rule in var.security_group_rules : [
       for cidr in rule.cidr_blocks : {
         name        = rule.name
         key         = "${rule_name}-${cidr}"
@@ -39,7 +36,7 @@ locals {
 }
 
 # --- 安全组规则 ---
-resource "aws_security_group_rule" "ingress" {
+resource "aws_security_group_rule" "rules" {
     for_each          = { for r in local.ingress_rules_flat : r.key => r }
     security_group_id = aws_security_group.security_group.id
     type              = each.value.type
