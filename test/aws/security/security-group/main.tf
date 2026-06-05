@@ -24,7 +24,7 @@ module "security_group" {
   vpc_id              = module.vpc.vpc_id
   security_group_name = "test-security-group"
 
-  ingress_rules = {
+  security_group_rules = {
     ssh = {
       name        = "ssh"
       type        = "ingress"

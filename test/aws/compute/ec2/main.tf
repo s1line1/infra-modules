@@ -33,7 +33,7 @@ module "security_group" {
   vpc_id              = module.vpc.vpc_id
   security_group_name = "test-security-group"
 
-  ingress_rules = {
+  security_group_rules = {
     ssh = {
       name        = "ssh"
       type        = "ingress"
@@ -48,6 +48,14 @@ module "security_group" {
       from_port   = "8080"
       to_port     = "8080"
       ip_protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    egress = {
+      name        = "egress_rules"
+      type        = "egress"
+      from_port   = "0"
+      to_port     = "0"
+      ip_protocol = "-1"
       cidr_blocks = ["0.0.0.0/0"]
     }
   }
@@ -99,12 +107,7 @@ module "ec2_instance" {
   instance_name  = "test-ec2-instance"
   instance_count = 1
 
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo apt update -y && sudo apt install ec2-instance-connect -y
-              sudo apt install docker.io -y
-              sudo systemctl enable docker --now
-              EOF
+  user_data = file("${path.module}/user_data.yaml")
 
   vpc_security_group_ids  = [module.security_group.security_group_id]
 }
