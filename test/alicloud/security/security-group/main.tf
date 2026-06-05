@@ -9,8 +9,6 @@ terraform {
 
 provider "alicloud" {
     region     = var.region
-    access_key = var.access_key
-    secret_key = var.secret_key
 }
 
 module "vpc" {
@@ -25,13 +23,15 @@ module "security_group" {
     security_group_name = "test-security-group"
     vpc_id              = module.vpc.vpc_id
 
-    ingress_rules = {
+    security_group_rules = {
         ssh = {
+            type        = "ingress"
             port_range  = "22/22"
             ip_protocol = "tcp"
             cidr_blocks = ["0.0.0.0/0"]
         }
         springboot-demo = {
+            type        = "ingress"
             port_range  = "8083/8083"
             ip_protocol = "tcp"
             cidr_blocks = ["0.0.0.0/0"]
