@@ -8,9 +8,9 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "subnet_id" {
+variable "subnet_ids" {
   description = "The ID of the subnet to associate with the route table."
-  type        = string
+  type        = map(string)
 }
 
 variable "vpc_name" {
