@@ -20,7 +20,7 @@ resource "aws_route" "public_internet" {
 }
 
 resource "aws_route_table_association" "rta" {
-  # count          = aws_route_table.public.id != "" ? 1 : 0
-  subnet_id      = var.subnet_id
+  for_each       = var.subnet_ids
+  subnet_id      = each.value
   route_table_id = aws_route_table.public.id
 }

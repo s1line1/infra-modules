@@ -20,11 +20,16 @@ module "vpc" {
 }
 
 module "subnet" {
-    source = "../../../../aws/network/subnet"
-    vpc_id                  = module.vpc.vpc_id
-    subnet_cidr             = "172.41.1.0/24"
-    subnet_name             = "test-subnet"
-    map_public_ip_on_launch = true
+  source                  = "../../../../aws/network/subnet"
+  vpc_id                  = module.vpc.vpc_id
+  map_public_ip_on_launch = true
+
+  public_subnets = {
+    subnet1 = {
+      cidr = "172.41.1.0/24"
+      name = "test-subnet-1"
+    }
+  }
 }
 
 module "security_group" {
@@ -63,7 +68,7 @@ module "security_group" {
 
 module "igw" {
   source = "../../../../aws/network/igw"
-  
+
   vpc_id   = module.vpc.vpc_id
   vpc_name = module.vpc.vpc_name
 }
@@ -71,10 +76,10 @@ module "igw" {
 module "route_table" {
   source = "../../../../aws/network/route_table"
 
-  vpc_id   = module.vpc.vpc_id
-  igw_id   = module.igw.igw_id
-  subnet_id = module.subnet.subnet_id
-  vpc_name = module.vpc.vpc_name
+  vpc_id     = module.vpc.vpc_id
+  igw_id     = module.igw.igw_id
+  subnet_ids = module.subnet.subnet_ids
+  vpc_name   = module.vpc.vpc_name
 }
 
 data "aws_ami" "ubuntu" {
@@ -101,13 +106,14 @@ data "aws_ami" "ubuntu" {
 module "ec2_instance" {
   source = "../../../../aws/compute/ec2"
 
-  ami_id        = data.aws_ami.ubuntu.id
+  ami_id         = data.aws_ami.ubuntu.id
   instance_type  = "t3.micro"
-  subnet_id      = module.subnet.subnet_id
+  subnet_id      = module.subnet.subnet_ids["subnet1"]
+  # subnet_id = one(values(module.subnet.subnet_ids)) # 只有一个子网时，可以直接使用 one() 函数获取子网 ID
   instance_name  = "test-ec2-instance"
   instance_count = 1
 
   user_data = file("${path.module}/user_data.yaml")
 
-  vpc_security_group_ids  = [module.security_group.security_group_id]
+  vpc_security_group_ids = [module.security_group.security_group_id]
 }
