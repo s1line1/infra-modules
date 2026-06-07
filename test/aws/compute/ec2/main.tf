@@ -116,4 +116,10 @@ module "ec2_instance" {
   user_data = file("${path.module}/user_data.yaml")
 
   vpc_security_group_ids = [module.security_group.security_group_id]
+
+  root_block_device = {
+    volume_size = 20
+    volume_type = "gp3"
+    throughput  = 125
+  }
 }

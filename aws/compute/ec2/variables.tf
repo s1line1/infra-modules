@@ -33,3 +33,10 @@ variable "vpc_security_group_ids" {
   description = "The IDs of the security groups to associate with the EC2 instance."
   type        = list(string)
 }
+
+
+variable "root_block_device" {
+  description = "The root block device configuration for the EC2 instance."
+  type        = any
+  default     = {}
+}

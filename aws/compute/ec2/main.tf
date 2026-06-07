@@ -19,6 +19,14 @@ resource "aws_instance" "ec2_instance" {
     http_endpoint = "enabled"
   }
 
+  dynamic "root_block_device" {
+    for_each = length(var.root_block_device) > 0 ? [var.root_block_device] : []
+    content {
+      volume_size           = lookup(root_block_device.value, "volume_size", null)
+      volume_type           = lookup(root_block_device.value, "volume_type", null)
+      throughput            = lookup(root_block_device.value, "throughput", null)
+    }
+  }
 
   tags = {
     Name = var.instance_name
