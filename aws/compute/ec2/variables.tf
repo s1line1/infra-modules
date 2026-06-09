@@ -40,3 +40,9 @@ variable "root_block_device" {
   type        = any
   default     = {}
 }
+
+# key name
+variable "key_name" {
+    description = "Key name for ECS instances"
+    type        = string
+}
